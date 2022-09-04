@@ -1,0 +1,14 @@
+node_modules/
+.bundle/
+.vscode/
+android/
+ios/
+.buckconfig
+.editorconfig
+.eslintc.json
+.gitignore
+.prettierrc.json
+.ruby-version
+Gemfile
+package-lock.json
+package.json
