@@ -1,0 +1,15 @@
+{
+  "recommendations": [
+    "editorconfig.editorconfig",
+    "jundat95.react-native-snippet",
+    "dsznajder.es7-react-js-snippets",
+    "christian-kohler.npm-intellisense",
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "eamodio.gitlens",
+    "usernamehw.errorlens",
+    "vincaslt.highlight-matching-tag",
+    "formulahendry.auto-rename-tag",
+    "naumovs.color-highlight"
+  ]
+}
