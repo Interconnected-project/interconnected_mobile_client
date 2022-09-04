@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@brandonhenao/react-native-disable-battery-optimizations-android": "^1.1.0",
+    "expo": "^46.0.0",
+    "expo-battery": "~6.3.0",
     "react": "18.0.0",
     "react-native": "0.69.5"
   },

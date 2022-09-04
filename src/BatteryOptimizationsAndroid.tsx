@@ -2,24 +2,26 @@ import React, { useState } from 'react';
 import { Button, ActivityIndicator } from 'react-native';
 // @ts-ignore
 import RNDisableBatteryOptimizationsAndroid from '@brandonhenao/react-native-disable-battery-optimizations-android';
+import * as Battery from 'expo-battery';
+
 import MyView from './common/MyView';
 import MyText from './common/MyText';
 
-function batteryOptimizationsEnabled() {
+function batteryOptimizationsActive() {
   return (
     <MyView>
       <MyText>Battery optimization is Enabled ❌</MyText>
       <Button
         title='Disable battery optimization'
-        onPress={() =>
-          RNDisableBatteryOptimizationsAndroid.enableBackgroundServicesDialogue()
-        }
+        onPress={() => {
+          RNDisableBatteryOptimizationsAndroid.enableBackgroundServicesDialogue();
+        }}
       />
     </MyView>
   );
 }
 
-function batteryOptimizationsDisabled() {
+function batteryOptimizationsNotActive() {
   return (
     <MyView>
       <MyText>Battery optimization is Disabled ✔</MyText>
@@ -29,24 +31,27 @@ function batteryOptimizationsDisabled() {
 
 export default function BatteryOptimizationsAndroid() {
   const [isLoading, setIsLoading] = useState(true);
-  const [isBatteryOptimizationAvailable, setIsBatteryOptimizationAvailable] =
-    useState(true);
-  const [isBatteryOptimizationDisabled, setIsBatteryOptimizationDisabled] =
-    useState(true);
+  const [isBatteryOptimizationActive, setIsBatteryOptimizationActive] =
+    useState(false);
 
   RNDisableBatteryOptimizationsAndroid.isBatteryOptimizationEnabled().then(
     (isEnabled: boolean) => {
-      setIsBatteryOptimizationAvailable(isEnabled);
-      //TODO
-      setIsBatteryOptimizationDisabled(false);
-      setIsLoading(false);
+      if (isEnabled) {
+        Battery.isBatteryOptimizationEnabledAsync().then((value) => {
+          setIsBatteryOptimizationActive(value);
+          setIsLoading(false);
+        });
+      } else {
+        setIsBatteryOptimizationActive(false);
+        setIsLoading(false);
+      }
     }
   );
   if (isLoading) {
     return <ActivityIndicator />;
-  } else if (!isBatteryOptimizationAvailable || isBatteryOptimizationDisabled) {
-    return batteryOptimizationsDisabled();
+  } else if (!isBatteryOptimizationActive) {
+    return batteryOptimizationsNotActive();
   } else {
-    return batteryOptimizationsEnabled();
+    return batteryOptimizationsActive();
   }
 }
