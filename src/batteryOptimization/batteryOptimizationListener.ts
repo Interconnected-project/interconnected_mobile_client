@@ -10,7 +10,6 @@ export default function batteryOptimizationListener(
     if (nextAppState === 'active') {
       BatteryOptimizationModule.isBatteryOptimizationCurrentlyActive().then(
         (isActive: any) => {
-          console.log(isActive);
           setIsBatteryOptimizationActive(isActive);
           setIsLoading(false);
         }
