@@ -13,6 +13,6 @@
   },
   "plugins": ["react", "react-native", "import"],
   "rules": {
-    "max-len": ["warn", 80]
+    "max-len": ["warn", 80, { "ignorePattern": "^import .*" }]
   }
 }
