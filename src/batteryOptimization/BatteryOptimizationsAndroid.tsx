@@ -19,9 +19,9 @@ export default function BatteryOptimizationsAndroid() {
 
   if (isLoading) {
     return <ActivityIndicator />;
-  } else if (!isBatteryOptimizationActive) {
-    return <BatteryOptimizationsNotActive />;
-  } else {
+  } else if (isBatteryOptimizationActive) {
     return <BatteryOptimizationsActive />;
+  } else {
+    return <BatteryOptimizationsNotActive />;
   }
 }
