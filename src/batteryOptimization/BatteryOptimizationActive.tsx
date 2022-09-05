@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from 'react-native';
-import RNDisableBatteryOptimizationsAndroid from '@brandonhenao/react-native-disable-battery-optimizations-android';
+import { RNDisableBatteryOptimizationsAndroid as AndroidBatteryOpt } from '@brandonhenao/react-native-disable-battery-optimizations-android';
 import MyText from '../common/MyText';
 import MyView from '../common/MyView';
 
@@ -11,7 +11,7 @@ export default function BatteryOptimizationsActive() {
       <Button
         title='Disable battery optimization'
         onPress={() => {
-          RNDisableBatteryOptimizationsAndroid.enableBackgroundServicesDialogue();
+          AndroidBatteryOpt.enableBackgroundServicesDialogue();
         }}
       />
     </MyView>
