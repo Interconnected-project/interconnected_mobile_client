@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button } from 'react-native';
-// @ts-ignore
 import RNDisableBatteryOptimizationsAndroid from '@brandonhenao/react-native-disable-battery-optimizations-android';
 import MyText from '../common/MyText';
 import MyView from '../common/MyView';

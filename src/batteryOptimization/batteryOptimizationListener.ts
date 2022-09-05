@@ -1,5 +1,4 @@
 import { AppStateStatus } from 'react-native';
-// @ts-ignore
 import RNDisableBatteryOptimizationsAndroid from '@brandonhenao/react-native-disable-battery-optimizations-android';
 import * as Battery from 'expo-battery';
 
