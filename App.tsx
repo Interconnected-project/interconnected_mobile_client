@@ -1,20 +1,20 @@
 import React from 'react';
+import { View } from 'react-native';
 
+import styles from './src/common/styles';
 import MyStatusBar from './src/common/MyStatusBar';
-import MyView from './src/common/MyView';
-import WiFiConnection from './src/deviceStatus/WiFiConnection';
-import BatteryOptimizationsAndroid from './src/deviceStatus/BatteryOptimizationsAndroid';
+import LogoSection from './src/LogoSection';
+import DeviceStatus from './src/DeviceStatusSection';
+
 import BackgroundTaskSingleton from './src/background/BackgroundTaskSingleton';
-import BatteryStatus from './src/deviceStatus/BatteryStatus';
 
 export default function App() {
   BackgroundTaskSingleton.instance.start();
   return (
-    <MyView>
+    <View style={styles.app}>
       <MyStatusBar />
-      <WiFiConnection />
-      <BatteryStatus />
-      <BatteryOptimizationsAndroid />
-    </MyView>
+      <LogoSection />
+      <DeviceStatus />
+    </View>
   );
 }
