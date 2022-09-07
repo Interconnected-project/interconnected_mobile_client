@@ -15,9 +15,9 @@ function status(isLoading: boolean, isBatteryOptimizationActive: boolean) {
   if (isLoading) {
     return <ActivityIndicator />;
   } else if (isBatteryOptimizationActive) {
-    return <>❌</>;
+    return <>🔴</>;
   } else {
-    return <>✔</>;
+    return <>🟢</>;
   }
 }
 

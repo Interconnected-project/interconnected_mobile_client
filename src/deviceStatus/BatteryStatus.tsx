@@ -13,9 +13,9 @@ function status(
   if (isLoading) {
     return <ActivityIndicator />;
   } else if (batteryLevel >= BATTERY_TRESHOLD && !isLowPowerMode) {
-    return <>✔</>;
+    return <>🟢</>;
   } else {
-    return <>❌</>;
+    return <>🔴</>;
   }
 }
 

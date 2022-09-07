@@ -12,9 +12,9 @@ function status(
   if (isLoading) {
     return <ActivityIndicator />;
   } else if (type === NetInfoStateType.wifi && isConnected) {
-    return <>✔</>;
+    return <>🟢</>;
   } else {
-    return <>❌</>;
+    return <>🔴</>;
   }
 }
 
