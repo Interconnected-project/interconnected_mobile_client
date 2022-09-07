@@ -10,7 +10,7 @@ const myTextStyle = StyleSheet.create({
   style: {
     marginTop: 8,
     fontSize: 18,
-    fontWeight: '400',
+    fontWeight: '600',
     color: '#DACFBA',
   },
 });
