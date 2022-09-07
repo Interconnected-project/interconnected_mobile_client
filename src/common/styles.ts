@@ -2,10 +2,11 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   app: {
-    marginHorizontal: 20,
-    marginVertical: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
     height: '100%',
     justifyContent: 'space-evenly',
+    backgroundColor: '#0D1A2D',
   },
   logoSection: {
     width: '100%',
@@ -13,7 +14,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   logoImage: {
-    width: '60%',
+    width: '80%',
     height: undefined,
     aspectRatio: 1 / 1,
   },

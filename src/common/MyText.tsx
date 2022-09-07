@@ -11,21 +11,12 @@ const myTextStyle = StyleSheet.create({
     marginTop: 8,
     fontSize: 18,
     fontWeight: '400',
+    color: '#DACFBA',
   },
 });
 
 const MyText = ({ children }: MyTextProps) => {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <Text
-      style={[
-        myTextStyle.style,
-        { color: isDarkMode ? Colors.light : Colors.dark },
-      ]}
-    >
-      {children}
-    </Text>
-  );
+  return <Text style={[myTextStyle.style]}>{children}</Text>;
 };
 
 export default MyText;
