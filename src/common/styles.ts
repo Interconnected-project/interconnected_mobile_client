@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     height: '100%',
     justifyContent: 'space-evenly',
-    backgroundColor: '#0D1A2D',
+    backgroundColor: '#0c82c7',
   },
   logoSection: {
     width: '100%',
@@ -21,12 +21,11 @@ const styles = StyleSheet.create({
   deviceStatusSection: {
     alignItems: 'flex-start',
     justifyContent: 'center',
-    borderWidth: 3,
-    borderColor: '#FAB505',
     borderRadius: 10,
     paddingHorizontal: 10,
     paddingTop: 10,
-    paddingBottom: 13,
+    paddingBottom: 20,
+    backgroundColor: '#13567D',
   },
 });
 
