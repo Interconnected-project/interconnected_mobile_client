@@ -1,5 +1,7 @@
 import NetInfo, { NetInfoStateType } from '@react-native-community/netinfo';
+import DeviceInfo from 'react-native-device-info';
 import notifee from '@notifee/react-native';
+import { BATTERY_TRESHOLD } from '../deviceStatus/BatteryStatus';
 
 export const backgroundTaskOptions = {
   taskName: 'interconnected-background-task',
@@ -27,6 +29,11 @@ export function backgroundTask(channelId: string) {
           resolve(state.type === NetInfoStateType.wifi && isInternetReachable);
         });
       });
+      let batteryStatus = await DeviceInfo.getPowerState();
+      let batteryLevel = batteryStatus.batteryLevel ?? 0;
+      let isLowPowerMode = batteryStatus.lowPowerMode ?? false;
+      let batteryStatusBoolean =
+        batteryLevel >= BATTERY_TRESHOLD && !isLowPowerMode;
       let currentdate = new Date();
       await notifee.displayNotification({
         id: '123',
@@ -38,7 +45,9 @@ export function backgroundTask(channelId: string) {
           ':' +
           currentdate.getSeconds() +
           ', Wi-Fi: ' +
-          wifiStatus.toString(),
+          wifiStatus.toString() +
+          ', Battery: ' +
+          batteryStatusBoolean,
         android: {
           channelId,
           smallIcon: 'ic_launcher',

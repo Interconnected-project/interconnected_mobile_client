@@ -3,7 +3,7 @@ import { ActivityIndicator } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import MyText from '../common/MyText';
 
-const BATTERY_TRESHOLD = 0.2;
+export const BATTERY_TRESHOLD = 0.2;
 
 function status(
   isLoading: boolean,
