@@ -8,6 +8,7 @@ import DeviceStatusSection from './src/DeviceStatusSection';
 
 import BackgroundTaskSingleton from './src/background/BackgroundTaskSingleton';
 import BatterySection from './src/deviceStatus/BatterySection';
+import ConnectivitySection from './src/deviceStatus/ConnectivitySection';
 
 export default function App() {
   BackgroundTaskSingleton.instance.start();
@@ -17,6 +18,7 @@ export default function App() {
       <LogoSection />
       <DeviceStatusSection />
       <BatterySection />
+      <ConnectivitySection />
     </View>
   );
 }
