@@ -1,8 +1,8 @@
 import React from 'react';
 import { View } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
-import MyLegend from '../common/MyLegend';
 
+import MyLegend from '../common/MyLegend';
 import StatusField from '../common/StatusField';
 import styles from '../common/styles';
 
