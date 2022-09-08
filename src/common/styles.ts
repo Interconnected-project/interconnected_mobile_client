@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   logoImage: {
-    width: '80%',
+    width: '70%',
     height: undefined,
     aspectRatio: 1 / 1,
   },
