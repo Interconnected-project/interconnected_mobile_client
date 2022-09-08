@@ -7,7 +7,7 @@ import LogoSection from './src/LogoSection';
 import DeviceStatusSection from './src/DeviceStatusSection';
 
 import BackgroundTaskSingleton from './src/background/BackgroundTaskSingleton';
-import BatterySection from './src/deviceStatus/batterySection/BatterySection';
+import BatterySection from './src/deviceStatus/BatterySection';
 
 export default function App() {
   BackgroundTaskSingleton.instance.start();

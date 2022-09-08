@@ -1,7 +1,7 @@
 import NetInfo, { NetInfoStateType } from '@react-native-community/netinfo';
 import DeviceInfo from 'react-native-device-info';
 import notifee from '@notifee/react-native';
-import { BATTERY_PERCENTAGE_TRESHOLD } from '../deviceStatus/batterySection/BatterySection';
+import { BATTERY_PERCENTAGE_TRESHOLD } from '../deviceStatus/BatterySection';
 
 export const backgroundTaskOptions = {
   taskName: 'interconnected-background-task',
