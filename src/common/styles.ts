@@ -27,6 +27,13 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     backgroundColor: '#121212',
   },
+  legend: {
+    position: 'absolute',
+    top: -10,
+    left: 10,
+    fontWeight: 'bold',
+    color: '#DACFBA',
+  },
 });
 
 export default styles;
