@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     height: '100%',
     justifyContent: 'space-evenly',
-    backgroundColor: '#0c82c7',
+    backgroundColor: '#1e1f21',
   },
   logoSection: {
     width: '100%',
@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   logoImage: {
-    width: '80%',
+    width: '70%',
     height: undefined,
     aspectRatio: 1 / 1,
   },
@@ -25,7 +25,20 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingTop: 10,
     paddingBottom: 20,
-    backgroundColor: '#13567D',
+    backgroundColor: '#121212',
+  },
+  legend: {
+    position: 'absolute',
+    top: -10,
+    left: 10,
+    fontWeight: 'bold',
+    color: '#DACFBA',
+  },
+  text: {
+    marginTop: 8,
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#DACFBA',
   },
 });
 

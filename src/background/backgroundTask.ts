@@ -1,7 +1,7 @@
 import NetInfo, { NetInfoStateType } from '@react-native-community/netinfo';
 import DeviceInfo from 'react-native-device-info';
 import notifee from '@notifee/react-native';
-import { BATTERY_TRESHOLD } from '../deviceStatus/BatteryStatus';
+import { BATTERY_PERCENTAGE_TRESHOLD } from '../deviceStatus/BatterySection';
 
 export const backgroundTaskOptions = {
   taskName: 'interconnected-background-task',
@@ -33,7 +33,7 @@ export function backgroundTask(channelId: string) {
       let batteryLevel = batteryStatus.batteryLevel ?? 0;
       let isLowPowerMode = batteryStatus.lowPowerMode ?? false;
       let batteryStatusBoolean =
-        batteryLevel >= BATTERY_TRESHOLD && !isLowPowerMode;
+        batteryLevel >= BATTERY_PERCENTAGE_TRESHOLD && !isLowPowerMode;
       let currentdate = new Date();
       await notifee.displayNotification({
         id: '123',
