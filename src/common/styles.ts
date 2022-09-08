@@ -34,6 +34,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#DACFBA',
   },
+  text: {
+    marginTop: 8,
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#DACFBA',
+  },
 });
 
 export default styles;
