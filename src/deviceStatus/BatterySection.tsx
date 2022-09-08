@@ -41,7 +41,7 @@ export default function BatterySection() {
         check={checkBatteryPercentageAboveTreshold}
       />
       <StatusField
-        text={'Low power mode deactivated '}
+        text={'Low power mode deactivated'}
         check={checkLowPowerModeDeactivated}
       />
     </View>
