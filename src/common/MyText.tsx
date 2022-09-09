@@ -1,22 +1,13 @@
 import React from 'react';
-import { Text, StyleSheet, useColorScheme } from 'react-native';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { Text } from 'react-native';
+import styles from './styles';
 
 interface MyTextProps {
   children: React.ReactNode;
 }
 
-const myTextStyle = StyleSheet.create({
-  style: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#DACFBA',
-  },
-});
-
 const MyText = ({ children }: MyTextProps) => {
-  return <Text style={[myTextStyle.style]}>{children}</Text>;
+  return <Text style={[styles.text]}>{children}</Text>;
 };
 
 export default MyText;
