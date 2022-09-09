@@ -8,7 +8,7 @@ export default function GridStatus() {
   return (
     <StepIndicator
       customStyles={gridStatusStyle}
-      currentPosition={2}
+      currentPosition={1}
       labels={labels}
       stepCount={labels.length}
     />
