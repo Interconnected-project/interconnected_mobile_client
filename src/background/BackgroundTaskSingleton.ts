@@ -1,16 +1,10 @@
-import BackgroundService from 'react-native-background-actions';
-import notifee from '@notifee/react-native';
-
-import { backgroundTask, backgroundTaskOptions } from './backgroundTask';
+import Heartbeat from './Heartbeat';
 
 export default class BackgroundTaskSingleton {
   private static _instance: BackgroundTaskSingleton;
 
-  private isStartedInThisRun: boolean;
-
-  private constructor() {
-    this.isStartedInThisRun = false;
-  }
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  private constructor() {}
 
   public static get instance(): BackgroundTaskSingleton {
     if (this._instance === null || this._instance === undefined) {
@@ -19,7 +13,37 @@ export default class BackgroundTaskSingleton {
     return this._instance;
   }
 
+  public async isRunning(): Promise<boolean> {
+    return new Promise<boolean>((resolve) => {
+      Heartbeat.isServiceRunning().then((res: boolean) => {
+        resolve(res);
+      });
+    });
+  }
+
   public async start(): Promise<void> {
+    return new Promise<void>((resolve) => {
+      this.isRunning().then(async (v) => {
+        if (!v) {
+          await Heartbeat.startService();
+        }
+        resolve();
+      });
+    });
+  }
+
+  public async stop(): Promise<void> {
+    return new Promise<void>((resolve) => {
+      this.isRunning().then(async (v) => {
+        if (v) {
+          await Heartbeat.stopService();
+        }
+        resolve();
+      });
+    });
+  }
+
+  /*public async start(): Promise<void> {
     let channelId: string;
     if (!this.isStartedInThisRun) {
       this.isStartedInThisRun = true;
@@ -54,5 +78,5 @@ export default class BackgroundTaskSingleton {
           });
       }
     }
-  }
+  }*/
 }
