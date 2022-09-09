@@ -24,7 +24,7 @@ const gridStatusStyle = {
   labelSize: 13,
   currentStepLabelColor: '#c80a50',
 };
-const labels = ['Setup required', 'Connecting', 'Online'];
+const labels = ['Not ready', 'Connecting', 'Online'];
 
 export default function GridStatus() {
   return (
