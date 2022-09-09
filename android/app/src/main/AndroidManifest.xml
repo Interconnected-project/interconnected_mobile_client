@@ -2,6 +2,9 @@
   package="com.interconnected_mobile_client">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/>
     
     <application
@@ -23,5 +26,24 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
       </activity>
+        <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+        <service
+            android:name="com.interconnected_mobile_client.HeartbeatService"
+            android:enabled="true"
+            android:exported="false" >
+        </service>
+        <service
+            android:name="com.interconnected_mobile_client.HeartbeatEventService">
+        </service>
+        <receiver
+            android:name="com.interconnected_mobile_client.BootUpReceiver"
+            android:enabled="true"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
     </application>
 </manifest>
