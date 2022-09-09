@@ -26,7 +26,7 @@ export default function ConnectivitySection() {
   return (
     <View style={styles.deviceStatusSection}>
       <MyLegend>Connectivity:</MyLegend>
-      <StatusField text={'Wi-Fi connected'} check={checkWiFiConnected} />
+      <StatusField text={'Connected to Wi-Fi'} check={checkWiFiConnected} />
       <StatusField
         text={'Internet connection available'}
         check={checkIsConnectedToInternet}
