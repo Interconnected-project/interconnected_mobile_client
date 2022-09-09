@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 const Tab = createBottomTabNavigator();
 import Feather from 'react-native-vector-icons/Feather';
@@ -8,9 +8,17 @@ import MyStatusBar from './src/common/MyStatusBar';
 import Home from './src/tabs/home/Home';
 import Settings from './src/tabs/settings/Settings';
 
+const navigationContainerTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    border: '#080808',
+  },
+};
+
 export default function App() {
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={navigationContainerTheme}>
       <MyStatusBar />
       <Tab.Navigator
         screenOptions={{
