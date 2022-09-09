@@ -3,8 +3,7 @@ import { View } from 'react-native';
 
 import styles from '../../common/styles';
 import BacgroundTaskSwitch from './BackgroundTaskSwitch';
-import BatterySection from './BatterySection';
-import ConnectivitySection from './ConnectivitySection';
+import PrerequisitesSection from './PrerequisitesSection';
 import GridStatus from './GridStatus';
 import LogoSection from './LogoSection';
 
@@ -14,8 +13,7 @@ export default function Home() {
       <LogoSection />
       <GridStatus />
       <BacgroundTaskSwitch />
-      <BatterySection />
-      <ConnectivitySection />
+      <PrerequisitesSection />
     </View>
   );
 }
