@@ -27,7 +27,7 @@ export default function BacgroundTaskSwitch() {
 
   return (
     <View style={[styles.backgroundTaskSwitchSection]}>
-      <MyText>Enable background task:</MyText>
+      <MyText>Enable Grid contribution:</MyText>
       <SwitchToggle
         switchOn={isRunning}
         onPress={() => toggleSwitch(setIsRunning, isRunning)}
