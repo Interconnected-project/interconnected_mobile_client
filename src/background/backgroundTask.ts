@@ -1,7 +1,7 @@
 import NetInfo, { NetInfoStateType } from '@react-native-community/netinfo';
 import DeviceInfo from 'react-native-device-info';
 import notifee from '@notifee/react-native';
-import { BATTERY_PERCENTAGE_TRESHOLD } from '../deviceStatus/BatterySection';
+import { BATTERY_PERCENTAGE_TRESHOLD } from '../tabs/home/BatterySection';
 
 async function updateNotification(
   wifiStatus: boolean,

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Button, Modal, NativeModules, View } from 'react-native';
 
-import MyLegend from '../common/MyLegend';
-import MyView from '../common/MyView';
-import StatusField from '../common/StatusField';
-import styles from '../common/styles';
+import MyLegend from '../../common/MyLegend';
+import MyView from '../../common/MyView';
+import StatusField from '../../common/StatusField';
+import styles from '../../common/styles';
 const { BatteryOptimizationModule } = NativeModules;
 
 export default function AndroidSection() {

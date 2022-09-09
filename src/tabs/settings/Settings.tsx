@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
-import styles from './common/styles';
-import AndroidSection from './deviceStatus/AndroidSection';
+import styles from '../../common/styles';
+import AndroidSection from './AndroidSection';
 
 export default function Settings() {
   return (

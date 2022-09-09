@@ -1,6 +1,6 @@
 import React from 'react';
 import StepIndicator from 'react-native-step-indicator';
-import { gridStatusStyle } from './common/styles';
+import { gridStatusStyle } from '../../common/styles';
 
 const labels = ['Setup required', 'Connecting', 'Online'];
 

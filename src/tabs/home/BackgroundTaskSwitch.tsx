@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import SwitchToggle from 'react-native-switch-toggle';
 
-import BackgroundTaskSingleton from './background/BackgroundTaskSingleton';
-import MyText from './common/MyText';
-import styles from './common/styles';
+import BackgroundTaskSingleton from '../../background/BackgroundTaskSingleton';
+import MyText from '../../common/MyText';
+import styles from '../../common/styles';
 
 async function toggleSwitch(
   setIsRunning: (isRunning: boolean) => any,

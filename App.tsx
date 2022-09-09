@@ -5,8 +5,8 @@ const Tab = createBottomTabNavigator();
 import Feather from 'react-native-vector-icons/Feather';
 
 import MyStatusBar from './src/common/MyStatusBar';
-import Home from './src/Home';
-import Settings from './src/Settings';
+import Home from './src/tabs/home/Home';
+import Settings from './src/tabs/settings/Settings';
 
 export default function App() {
   return (

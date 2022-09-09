@@ -2,9 +2,9 @@ import React from 'react';
 import { View } from 'react-native';
 import NetInfo, { NetInfoStateType } from '@react-native-community/netinfo';
 
-import MyLegend from '../common/MyLegend';
-import StatusField from '../common/StatusField';
-import styles from '../common/styles';
+import MyLegend from '../../common/MyLegend';
+import StatusField from '../../common/StatusField';
+import styles from '../../common/styles';
 
 function checkWiFiConnected() {
   return new Promise<boolean>(function (resolve) {
