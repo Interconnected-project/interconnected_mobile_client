@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { Switch } from 'react-native';
+import { View } from 'react-native';
+import SwitchToggle from 'react-native-switch-toggle';
+
 import BackgroundTaskSingleton from './background/BackgroundTaskSingleton';
 import MyText from './common/MyText';
+import styles from './common/styles';
 
-function toggleSwitch(setIsRunning: (isRunning: boolean) => any) {
-  return async (newValue: boolean) => {
-    if (newValue) {
-      await BackgroundTaskSingleton.instance.start();
-    } else {
-      await BackgroundTaskSingleton.instance.stop();
-    }
-    setIsRunning(newValue);
-  };
+async function toggleSwitch(
+  setIsRunning: (isRunning: boolean) => any,
+  currentValue: boolean
+) {
+  if (!currentValue) {
+    await BackgroundTaskSingleton.instance.start();
+  } else {
+    await BackgroundTaskSingleton.instance.stop();
+  }
+  setIsRunning(!currentValue);
 }
 
 export default function BacgroundTaskSwitch() {
@@ -22,17 +26,18 @@ export default function BacgroundTaskSwitch() {
   }, []);
 
   return (
-    <>
-      <MyText>
-        Enable background task:
-        <Switch
-          trackColor={{ false: '#767577', true: '#81b0ff' }}
-          thumbColor={isRunning ? '#f5dd4b' : '#f4f3f4'}
-          ios_backgroundColor='#3e3e3e'
-          onValueChange={toggleSwitch(setIsRunning)}
-          value={isRunning}
-        />
-      </MyText>
-    </>
+    <View style={[styles.backgroundTaskSwitchSection]}>
+      <MyText>Enable background task:</MyText>
+      <SwitchToggle
+        switchOn={isRunning}
+        onPress={() => toggleSwitch(setIsRunning, isRunning)}
+        circleColorOff='#e84744'
+        circleColorOn='#67a140'
+        backgroundColorOn='#6D6D6D'
+        backgroundColorOff='#6D6D6D'
+        containerStyle={styles.backgroundSwitchContainer}
+        circleStyle={styles.backgroundSwitchCircle}
+      />
+    </View>
   );
 }

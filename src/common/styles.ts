@@ -40,6 +40,24 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#DACFBA',
   },
+  backgroundTaskSwitchSection: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 16,
+  },
+  backgroundSwitchContainer: {
+    marginTop: 14,
+    width: 50,
+    height: 16,
+    borderRadius: 15,
+    padding: 0,
+  },
+  backgroundSwitchCircle: {
+    width: 28,
+    height: 22,
+    borderRadius: 15,
+  },
 });
 
 export default styles;
