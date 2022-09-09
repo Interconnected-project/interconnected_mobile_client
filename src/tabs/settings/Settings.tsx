@@ -1,12 +1,14 @@
 import React from 'react';
 import { View } from 'react-native';
 import styles from '../../common/styles';
-import AndroidSection from './AndroidSection';
+import AndroidAutostart from './AndroidAutostart';
+import BatteryOptimization from './BatteryOptimization';
 
 export default function Settings() {
   return (
     <View style={styles.app}>
-      <AndroidSection />
+      <BatteryOptimization />
+      <AndroidAutostart />
     </View>
   );
 }

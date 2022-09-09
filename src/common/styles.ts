@@ -30,6 +30,14 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     backgroundColor: '#121212',
   },
+  settingsSection: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 20,
+    backgroundColor: '#121212',
+  },
   legend: {
     position: 'absolute',
     top: -10,
