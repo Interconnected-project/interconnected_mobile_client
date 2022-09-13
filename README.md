@@ -30,6 +30,10 @@
 
 TODO
 
+- [Thesis document](https://github.com/Tale152/master-thesis)
+- [Mobile client](https://github.com/Tale152/interconnected_mobile_client)
+- [Desktop client](https://github.com/Tale152/interconnected_desktop_client)
+
 ## This repository: mobile client
 
 TODO
