@@ -2,11 +2,11 @@
 
 ### Status:
 
-![CD](https://github.com/Tale152/interconnected_mobile_client/actions/workflows/cd.yml/badge.svg)
-![GitHub last commit](https://img.shields.io/github/last-commit/Tale152/interconnected_mobile_client)
-![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/Tale152/interconnected_mobile_client?include_prereleases)
-![GitHub Release Date](https://img.shields.io/github/release-date/Tale152/interconnected_mobile_client?include_prereleases)
-![GitHub commits since latest release (by date)](https://img.shields.io/github/commits-since/Tale152/interconnected_mobile_client/latest?include_prereleases)
+![CD](https://github.com/Interconnected-project/interconnected_mobile_client/actions/workflows/cd.yml/badge.svg)
+![GitHub last commit](https://img.shields.io/github/last-commit/Interconnected-project/interconnected_mobile_client)
+![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/Interconnected-project/interconnected_mobile_client?include_prereleases)
+![GitHub Release Date](https://img.shields.io/github/release-date/Interconnected-project/interconnected_mobile_client?include_prereleases)
+![GitHub commits since latest release (by date)](https://img.shields.io/github/commits-since/Interconnected-project/interconnected_mobile_client/latest?include_prereleases)
 
 ### Technologies used:
 
