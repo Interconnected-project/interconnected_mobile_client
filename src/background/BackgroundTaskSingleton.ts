@@ -26,11 +26,11 @@ export default class BackgroundTaskSingleton {
     });
   }
 
-  public async start(): Promise<void> {
+  public async start(toast: (msg: string) => void): Promise<void> {
     return new Promise<void>((resolve) => {
       this.isRunning().then(async (v) => {
         if (!v) {
-          this.node.start('123', (msg: string) => console.log(msg));
+          this.node.start('123', toast);
           await Heartbeat.startService();
         }
         resolve();

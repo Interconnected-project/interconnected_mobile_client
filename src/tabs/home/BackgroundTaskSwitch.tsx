@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View } from 'react-native';
+import { View, ToastAndroid } from 'react-native';
 import SwitchToggle from 'react-native-switch-toggle';
 
 import BackgroundTaskSingleton from '../../background/BackgroundTaskSingleton';
@@ -11,7 +11,9 @@ async function toggleSwitch(
   currentValue: boolean
 ) {
   if (!currentValue) {
-    await BackgroundTaskSingleton.instance.start();
+    await BackgroundTaskSingleton.instance.start((msg: string) => {
+      ToastAndroid.show(msg, ToastAndroid.SHORT);
+    });
   } else {
     await BackgroundTaskSingleton.instance.stop();
   }
