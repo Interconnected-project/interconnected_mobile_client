@@ -1,10 +1,15 @@
+import { InterconnectedNodeBuilder } from 'interconnected_node';
+import InterconnectedNode from 'interconnected_node/dist/interconnected_node/InterconnectedNode';
 import Heartbeat from './Heartbeat';
 
 export default class BackgroundTaskSingleton {
   private static _instance: BackgroundTaskSingleton;
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  private constructor() {}
+  private node: InterconnectedNode;
+
+  private constructor() {
+    this.node = new InterconnectedNodeBuilder().build();
+  }
 
   public static get instance(): BackgroundTaskSingleton {
     if (this._instance === null || this._instance === undefined) {
@@ -25,6 +30,7 @@ export default class BackgroundTaskSingleton {
     return new Promise<void>((resolve) => {
       this.isRunning().then(async (v) => {
         if (!v) {
+          this.node.start('123', (msg: string) => console.log(msg));
           await Heartbeat.startService();
         }
         resolve();
@@ -36,6 +42,7 @@ export default class BackgroundTaskSingleton {
     return new Promise<void>((resolve) => {
       this.isRunning().then(async (v) => {
         if (v) {
+          this.node.stop();
           await Heartbeat.stopService();
         }
         resolve();
