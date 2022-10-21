@@ -1,4 +1,4 @@
-import { getMacAddress } from 'react-native-device-info';
+import { getUniqueId } from 'react-native-device-info';
 import { InterconnectedNodeBuilder } from 'interconnected_node';
 import InterconnectedNode from 'interconnected_node/dist/interconnected_node/InterconnectedNode';
 
@@ -35,9 +35,9 @@ export default class BackgroundTaskSingleton {
     return new Promise<void>((resolve, reject) => {
       this.isRunning().then(async (v) => {
         if (!v) {
-          const mac = await getMacAddress();
-          toast('my mac address:\n' + mac);
-          this.node.start(mac, toast, notification);
+          const id = await getUniqueId();
+          toast('my id:\n' + id);
+          this.node.start(id, toast, notification);
           await Heartbeat.startService();
           resolve();
         } else {
