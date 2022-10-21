@@ -1,6 +1,7 @@
 import { getMacAddress } from 'react-native-device-info';
 import { InterconnectedNodeBuilder } from 'interconnected_node';
 import InterconnectedNode from 'interconnected_node/dist/interconnected_node/InterconnectedNode';
+
 import Heartbeat from './Heartbeat';
 
 export default class BackgroundTaskSingleton {
@@ -27,13 +28,16 @@ export default class BackgroundTaskSingleton {
     });
   }
 
-  public async start(toast: (msg: string) => void): Promise<void> {
+  public async start(
+    toast: (msg: string) => void,
+    notification: (msg: string) => void
+  ): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       this.isRunning().then(async (v) => {
         if (!v) {
           const mac = await getMacAddress();
           toast('my mac address:\n' + mac);
-          this.node.start(mac, toast);
+          this.node.start(mac, toast, notification);
           await Heartbeat.startService();
           resolve();
         } else {

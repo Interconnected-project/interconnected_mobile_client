@@ -1,19 +1,42 @@
 import React, { useEffect, useState } from 'react';
 import { View, ToastAndroid } from 'react-native';
 import SwitchToggle from 'react-native-switch-toggle';
+import notifee from '@notifee/react-native';
 
 import BackgroundTaskSingleton from '../../background/BackgroundTaskSingleton';
 import MyText from '../../common/MyText';
 import styles from '../../common/styles';
+
+const toast = (msg: string) => {
+  ToastAndroid.show(msg, ToastAndroid.SHORT);
+};
+
+notifee.createChannel({
+  id: 'interconnected-background',
+  name: 'Interconnected Background',
+});
+
+const notification = (msg: string) => {
+  notifee.displayNotification({
+    id: new Date().valueOf().toString(),
+    title: 'Interconnected background task',
+    body: msg,
+    android: {
+      channelId: 'interconnected-background',
+      smallIcon: 'ic_launcher',
+      pressAction: {
+        id: 'default',
+      },
+    },
+  });
+};
 
 async function toggleSwitch(
   setIsRunning: (isRunning: boolean) => any,
   currentValue: boolean
 ) {
   if (!currentValue) {
-    await BackgroundTaskSingleton.instance.start((msg: string) => {
-      ToastAndroid.show(msg, ToastAndroid.SHORT);
-    });
+    await BackgroundTaskSingleton.instance.start(toast, notification);
   } else {
     await BackgroundTaskSingleton.instance.stop();
   }
