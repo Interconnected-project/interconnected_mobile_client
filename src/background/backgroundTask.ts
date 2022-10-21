@@ -1,8 +1,9 @@
-import NetInfo, { NetInfoStateType } from '@react-native-community/netinfo';
-import DeviceInfo from 'react-native-device-info';
+//import NetInfo, { NetInfoStateType } from '@react-native-community/netinfo';
+//import DeviceInfo from 'react-native-device-info';
 import notifee from '@notifee/react-native';
-import { BATTERY_PERCENTAGE_TRESHOLD } from '../tabs/home/PrerequisitesSection';
+//import { BATTERY_PERCENTAGE_TRESHOLD } from '../tabs/home/PrerequisitesSection';
 
+/*
 async function updateNotification(
   wifiStatus: boolean,
   batteryStatus: boolean,
@@ -31,10 +32,11 @@ async function updateNotification(
     },
   });
 }
+*/
 
 export function backgroundTask() {
   return async () => {
-    await notifee.createChannel({
+    /*await notifee.createChannel({
       id: 'default-id',
       name: 'Default Channel',
     });
@@ -50,5 +52,6 @@ export function backgroundTask() {
     let batteryStatusBoolean =
       batteryLevel >= BATTERY_PERCENTAGE_TRESHOLD / 100 && !isLowPowerMode;
     await updateNotification(wifiStatus, batteryStatusBoolean, 'default-id');
+    */
   };
 }
