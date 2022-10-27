@@ -23,8 +23,7 @@
     "react-native-step-indicator": "^1.0.3",
     "react-native-switch-toggle": "^2.2.1",
     "react-native-vector-icons": "^9.2.0",
-    "react-native-webrtc": "^106.0.0-beta.6",
-    "wrtc": "^0.4.7"
+    "react-native-webrtc": "^106.0.0-beta.6"
   },
   "devDependencies": {
     "@babel/core": "^7.19.3",
