@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, ToastAndroid } from 'react-native';
+import { View } from 'react-native';
 import SwitchToggle from 'react-native-switch-toggle';
 import notifee from '@notifee/react-native';
 
@@ -8,7 +8,8 @@ import MyText from '../../common/MyText';
 import styles from '../../common/styles';
 
 const toast = (msg: string) => {
-  ToastAndroid.show(msg, ToastAndroid.SHORT);
+  //ToastAndroid.show(msg, ToastAndroid.SHORT);
+  console.log('TOAST: ' + msg);
 };
 
 notifee.createChannel({
@@ -18,7 +19,7 @@ notifee.createChannel({
 
 const notification = (msg: string) => {
   notifee.displayNotification({
-    id: new Date().valueOf().toString(),
+    id: '123',
     title: 'Interconnected background task',
     body: msg,
     android: {

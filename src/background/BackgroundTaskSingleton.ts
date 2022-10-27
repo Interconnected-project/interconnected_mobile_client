@@ -1,13 +1,30 @@
 import { getUniqueId } from 'react-native-device-info';
+
 import { InterconnectedNodeBuilder } from 'interconnected_node';
 import InterconnectedNode from 'interconnected_node/dist/interconnected_node/InterconnectedNode';
-
 import Heartbeat from './Heartbeat';
-
+import {
+  RTCIceCandidate,
+  RTCPeerConnection,
+  RTCSessionDescription,
+} from 'react-native-webrtc';
 export default class BackgroundTaskSingleton {
   private static _instance: BackgroundTaskSingleton;
 
   private node: InterconnectedNode;
+
+  private peer: RTCPeerConnection = new RTCPeerConnection({
+    iceServers: [
+      {
+        urls: 'stun:stun.stunprotocol.org',
+      },
+      {
+        urls: 'turn:numb.viagenie.ca',
+        credential: 'muazkh',
+        username: 'webrtc@live.com',
+      },
+    ],
+  });
 
   private constructor() {
     this.node = new InterconnectedNodeBuilder().build();
@@ -37,7 +54,16 @@ export default class BackgroundTaskSingleton {
         if (!v) {
           const id = await getUniqueId();
           toast('my id:\n' + id);
-          this.node.start(id, toast, notification);
+          this.node.start(
+            id,
+            toast,
+            this.onIncomingConnectionHandler(
+              this.peer,
+              this.node,
+              notification
+            ),
+            this.onIceCandidateReceivedHandler(this.peer)
+          );
           await Heartbeat.startService();
           resolve();
         } else {
@@ -57,6 +83,54 @@ export default class BackgroundTaskSingleton {
         resolve();
       });
     });
+  }
+
+  private onIncomingConnectionHandler(
+    peer: RTCPeerConnection,
+    node: InterconnectedNode,
+    notification: (msg: string) => void
+  ): (payload: any) => Promise<any> {
+    return async function (payload: any): Promise<any> {
+      peer.addEventListener('datachannel', (event: any) => {
+        const testChannel = event.channel;
+        testChannel.onmessage = (e: { data: string }) => {
+          let value = parseInt(e.data, 10);
+          notification('received ' + value++);
+          testChannel.send(value.toString());
+        };
+      });
+      peer.addEventListener('icecandidate', (e: any) => {
+        if (e.candidate) {
+          const icePayload = {
+            fromId: payload.answererId,
+            senderRole: 'NODE',
+            toId: payload.initiatorId,
+            receiverRole: payload.initiatorRole,
+            candidate: e.candidate,
+          };
+          node.emitIceCandidate(icePayload);
+        }
+      });
+      const desc = new RTCSessionDescription(payload.sdp);
+      await peer.setRemoteDescription(desc);
+      const answer: any = await peer.createAnswer();
+      await peer.setLocalDescription(answer);
+      return new Promise<any>((resolve) => {
+        payload.sdp = peer.localDescription;
+        resolve(payload);
+      });
+    };
+  }
+
+  private onIceCandidateReceivedHandler(
+    peer: RTCPeerConnection
+  ): (payload: any) => void {
+    return function (payload: any): void {
+      if (payload.candidate !== undefined) {
+        const candidate = new RTCIceCandidate(payload.candidate);
+        peer.addIceCandidate(candidate).catch((e: any) => console.log(e));
+      }
+    };
   }
 
   /*public async start(): Promise<void> {
