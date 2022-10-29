@@ -1,5 +1,6 @@
 import DeviceInfo, { getUniqueId } from 'react-native-device-info';
 import NetInfo, { NetInfoStateType } from '@react-native-community/netinfo';
+import notifee from '@notifee/react-native';
 
 import { InterconnectedNodeBuilder } from 'interconnected_node';
 import InterconnectedNode from 'interconnected_node/dist/interconnected_node/InterconnectedNode';
@@ -10,6 +11,31 @@ import { BATTERY_PERCENTAGE_TRESHOLD } from '../tabs/home/PrerequisitesSection';
 
 const BROKER_SERVICE_ADDRESS =
   'http://ec2-3-208-18-248.compute-1.amazonaws.com:8000';
+
+const toast = (msg: string) => {
+  //ToastAndroid.show(msg, ToastAndroid.SHORT);
+  console.log('TOAST: ' + msg);
+};
+
+notifee.createChannel({
+  id: 'interconnected-background',
+  name: 'Interconnected Background',
+});
+
+const notification = (msg: string) => {
+  notifee.displayNotification({
+    id: '123',
+    title: 'Interconnected background task',
+    body: msg,
+    android: {
+      channelId: 'interconnected-background',
+      smallIcon: 'ic_launcher',
+      pressAction: {
+        id: 'default',
+      },
+    },
+  });
+};
 
 export default class BackgroundTaskSingleton {
   private static _instance: BackgroundTaskSingleton;
@@ -35,21 +61,10 @@ export default class BackgroundTaskSingleton {
     });
   }
 
-  public async start(
-    toast: (msg: string) => void,
-    notification: (msg: string) => void
-  ): Promise<void> {
+  public async start(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       this.isRunning().then(async (v) => {
         if (!v) {
-          const id = await getUniqueId();
-          toast('my id:\n' + id);
-          this.node.start(
-            BROKER_SERVICE_ADDRESS,
-            id,
-            toast,
-            onIncomingConnectionHandler(notification)
-          );
           await Heartbeat.startService();
           resolve();
         } else {
@@ -63,10 +78,51 @@ export default class BackgroundTaskSingleton {
     return new Promise<void>((resolve) => {
       this.isRunning().then(async (v) => {
         if (v) {
-          this.node.stop();
+          await this.stopNode();
           await Heartbeat.stopService();
         }
         resolve();
+      });
+    });
+  }
+
+  public async startNode(): Promise<void> {
+    return new Promise<void>((resolve) => {
+      this.isRunning().then((backgroundTaskIsRunning) => {
+        if (backgroundTaskIsRunning) {
+          this.node.isRunning().then(async (nodeIsRunning) => {
+            if (!nodeIsRunning) {
+              const id = await getUniqueId();
+              toast('my id: ' + id);
+              this.node.start(
+                BROKER_SERVICE_ADDRESS,
+                id,
+                toast,
+                onIncomingConnectionHandler(notification)
+              );
+            }
+            resolve();
+          });
+        } else {
+          resolve();
+        }
+      });
+    });
+  }
+
+  public async stopNode(): Promise<void> {
+    return new Promise<void>((resolve) => {
+      this.isRunning().then((backgroundTaskIsRunning) => {
+        if (backgroundTaskIsRunning) {
+          this.node.isRunning().then(async (nodeIsRunning) => {
+            if (nodeIsRunning) {
+              this.node.stop();
+            }
+            resolve();
+          });
+        } else {
+          resolve();
+        }
       });
     });
   }
@@ -99,7 +155,7 @@ export default class BackgroundTaskSingleton {
     });
   }
 
-  private async prerequisitesMet(): Promise<boolean> {
+  public async prerequisitesMet(): Promise<boolean> {
     return new Promise<boolean>(function (resolve) {
       DeviceInfo.getPowerState().then((battery) => {
         if (
@@ -118,41 +174,4 @@ export default class BackgroundTaskSingleton {
       });
     });
   }
-
-  /*public async start(): Promise<void> {
-    let channelId: string;
-    if (!this.isStartedInThisRun) {
-      this.isStartedInThisRun = true;
-      if (!BackgroundService.isRunning()) {
-        notifee
-          .createChannel({
-            id: 'default-id',
-            name: 'Default Channel',
-          })
-          .then((id) => {
-            channelId = id;
-          })
-          .then(() => {
-            notifee.displayNotification({
-              id: '123',
-              title: 'Interconnected background',
-              body: 'Start',
-              android: {
-                channelId,
-                smallIcon: 'ic_launcher',
-                pressAction: {
-                  id: 'default',
-                },
-              },
-            });
-          })
-          .then(() => {
-            BackgroundService.start(
-              backgroundTask(channelId),
-              backgroundTaskOptions
-            );
-          });
-      }
-    }
-  }*/
 }
