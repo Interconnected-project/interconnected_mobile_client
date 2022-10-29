@@ -1,9 +1,12 @@
-import { getUniqueId } from 'react-native-device-info';
+import DeviceInfo, { getUniqueId } from 'react-native-device-info';
+import NetInfo, { NetInfoStateType } from '@react-native-community/netinfo';
 
 import { InterconnectedNodeBuilder } from 'interconnected_node';
 import InterconnectedNode from 'interconnected_node/dist/interconnected_node/InterconnectedNode';
 import Heartbeat from './Heartbeat';
 import onIncomingConnectionHandler from './interconnectedNodeReactNativeImplementations/onIncomingConnectionsHandler';
+import BackgroundTaskStatus from './BackgroundTaskStatus';
+import { BATTERY_PERCENTAGE_TRESHOLD } from '../tabs/home/PrerequisitesSection';
 
 const BROKER_SERVICE_ADDRESS =
   'http://ec2-3-208-18-248.compute-1.amazonaws.com:8000';
@@ -64,6 +67,54 @@ export default class BackgroundTaskSingleton {
           await Heartbeat.stopService();
         }
         resolve();
+      });
+    });
+  }
+
+  public async status(): Promise<string> {
+    return new Promise<string>(function (resolve) {
+      BackgroundTaskSingleton._instance.isRunning().then((running) => {
+        if (!running) {
+          resolve(BackgroundTaskStatus.OFF);
+        } else {
+          BackgroundTaskSingleton._instance
+            .prerequisitesMet()
+            .then((prerequisites) => {
+              if (!prerequisites) {
+                resolve(BackgroundTaskStatus.PREREQUISITES_NOT_MET);
+              } else {
+                BackgroundTaskSingleton._instance.node
+                  .isConnectedToGrid()
+                  .then((isConnected) => {
+                    if (!isConnected) {
+                      resolve(BackgroundTaskStatus.CONNECTING);
+                    } else {
+                      resolve(BackgroundTaskStatus.CONNECTED);
+                    }
+                  });
+              }
+            });
+        }
+      });
+    });
+  }
+
+  private async prerequisitesMet(): Promise<boolean> {
+    return new Promise<boolean>(function (resolve) {
+      DeviceInfo.getPowerState().then((battery) => {
+        if (
+          battery.batteryLevel === undefined ||
+          battery.batteryLevel * 100 < BATTERY_PERCENTAGE_TRESHOLD ||
+          battery.lowPowerMode === true
+        ) {
+          resolve(false);
+        } else {
+          NetInfo.fetch().then((net) => {
+            resolve(
+              net.type === NetInfoStateType.wifi && (net.isConnected ?? false)
+            );
+          });
+        }
       });
     });
   }
