@@ -1,6 +1,6 @@
 {
   "name": "interconnected_mobile_client",
-  "version": "0.7.1",
+  "version": "0.8.0",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
