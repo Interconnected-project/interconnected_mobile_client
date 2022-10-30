@@ -1,21 +1,16 @@
-import DeviceInfo, { getUniqueId } from 'react-native-device-info';
+import DeviceInfo from 'react-native-device-info';
 import NetInfo, { NetInfoStateType } from '@react-native-community/netinfo';
 import notifee from '@notifee/react-native';
 
-import { InterconnectedNodeBuilder } from 'interconnected_node';
-import InterconnectedNode from 'interconnected_node/dist/interconnected_node/InterconnectedNode';
 import Heartbeat from './Heartbeat';
 import onIncomingConnectionHandler from './interconnectedNodeReactNativeImplementations/onIncomingConnectionsHandler';
 import BackgroundTaskStatus from './BackgroundTaskStatus';
 import { BATTERY_PERCENTAGE_TRESHOLD } from '../tabs/home/PrerequisitesSection';
+import { InterconnectedNode } from 'interconnected_node';
+import { ToastAndroid } from 'react-native';
 
 const BROKER_SERVICE_ADDRESS =
   'http://ec2-3-208-18-248.compute-1.amazonaws.com:8000';
-
-const toast = (msg: string) => {
-  //ToastAndroid.show(msg, ToastAndroid.SHORT);
-  console.log('TOAST: ' + msg);
-};
 
 notifee.createChannel({
   id: 'interconnected-background',
@@ -43,7 +38,12 @@ export default class BackgroundTaskSingleton {
   private node: InterconnectedNode;
 
   private constructor() {
-    this.node = new InterconnectedNodeBuilder().build();
+    const myId = DeviceInfo.getUniqueIdSync();
+    ToastAndroid.show('My id: ' + myId, ToastAndroid.SHORT);
+    this.node = new InterconnectedNode(
+      myId,
+      onIncomingConnectionHandler(notification, myId)
+    );
   }
 
   public static get instance(): BackgroundTaskSingleton {
@@ -92,14 +92,7 @@ export default class BackgroundTaskSingleton {
         if (backgroundTaskIsRunning) {
           this.node.isRunning().then(async (nodeIsRunning) => {
             if (!nodeIsRunning) {
-              const id = await getUniqueId();
-              toast('my id: ' + id);
-              this.node.start(
-                BROKER_SERVICE_ADDRESS,
-                id,
-                toast,
-                onIncomingConnectionHandler(notification)
-              );
+              this.node.start(BROKER_SERVICE_ADDRESS);
             }
             resolve();
           });
