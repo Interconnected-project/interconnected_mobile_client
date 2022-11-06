@@ -1,17 +1,18 @@
 import DeviceInfo from 'react-native-device-info';
 import NetInfo, { NetInfoStateType } from '@react-native-community/netinfo';
-import notifee from '@notifee/react-native';
+// import notifee from '@notifee/react-native';
 
 import Heartbeat from './Heartbeat';
-import onIncomingConnectionHandler from './interconnectedNodeReactNativeImplementations/onIncomingConnectionsHandler';
 import BackgroundTaskStatus from './BackgroundTaskStatus';
 import { BATTERY_PERCENTAGE_TRESHOLD } from '../tabs/home/PrerequisitesSection';
-import { InterconnectedNode } from 'interconnected_node';
+import InterconnectedNode from 'interconnected_node';
 import { ToastAndroid } from 'react-native';
+import MobileP2PConnectionBuilders from './mobileSpecificNodeImplementation/MobileP2PConnectionBuilders';
 
 const BROKER_SERVICE_ADDRESS =
   'http://ec2-3-208-18-248.compute-1.amazonaws.com:8000';
 
+/*
 notifee.createChannel({
   id: 'interconnected-background',
   name: 'Interconnected Background',
@@ -31,6 +32,7 @@ const notification = (msg: string) => {
     },
   });
 };
+*/
 
 export default class BackgroundTaskSingleton {
   private static _instance: BackgroundTaskSingleton;
@@ -40,10 +42,7 @@ export default class BackgroundTaskSingleton {
   private constructor() {
     const myId = DeviceInfo.getUniqueIdSync();
     ToastAndroid.show('My id: ' + myId, ToastAndroid.SHORT);
-    this.node = new InterconnectedNode(
-      myId,
-      onIncomingConnectionHandler(notification, myId)
-    );
+    this.node = new InterconnectedNode(myId, new MobileP2PConnectionBuilders());
   }
 
   public static get instance(): BackgroundTaskSingleton {
