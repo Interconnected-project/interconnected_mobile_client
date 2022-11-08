@@ -26,12 +26,22 @@ export default class MobileMasterP2PConnection implements MasterP2PConnection {
     this.peer = new RTCPeerConnection({
       iceServers: [
         {
-          urls: 'stun:stun.stunprotocol.org',
+          urls: 'stun:openrelay.metered.ca:80',
         },
         {
-          urls: 'turn:numb.viagenie.ca',
-          credential: 'muazkh',
-          username: 'webrtc@live.com',
+          urls: 'turn:openrelay.metered.ca:80',
+          username: 'openrelayproject',
+          credential: 'openrelayproject',
+        },
+        {
+          urls: 'turn:openrelay.metered.ca:443',
+          username: 'openrelayproject',
+          credential: 'openrelayproject',
+        },
+        {
+          urls: 'turn:openrelay.metered.ca:443?transport=tcp',
+          username: 'openrelayproject',
+          credential: 'openrelayproject',
         },
       ],
     });
