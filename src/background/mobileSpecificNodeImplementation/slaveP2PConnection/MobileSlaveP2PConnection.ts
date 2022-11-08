@@ -1,10 +1,30 @@
 import { SlaveP2PConnection } from 'interconnected_node';
-
 import {
   RTCIceCandidate,
   RTCPeerConnection,
   RTCSessionDescription,
 } from 'react-native-webrtc';
+import notifee from '@notifee/react-native';
+
+notifee.createChannel({
+  id: 'interconnected-background',
+  name: 'Interconnected Background',
+});
+
+const notification = (id: string, msg: string) => {
+  notifee.displayNotification({
+    id: id,
+    title: 'Interconnected background task',
+    body: msg,
+    android: {
+      channelId: 'interconnected-background',
+      smallIcon: 'ic_launcher',
+      pressAction: {
+        id: 'default',
+      },
+    },
+  });
+};
 
 export default class MobileSlaveP2PConnection implements SlaveP2PConnection {
   private peer: RTCPeerConnection;
@@ -17,6 +37,8 @@ export default class MobileSlaveP2PConnection implements SlaveP2PConnection {
 
   private communicationChannel: any;
 
+  private notificationId: string;
+
   constructor(
     masterId: string,
     masterRole: string,
@@ -25,6 +47,7 @@ export default class MobileSlaveP2PConnection implements SlaveP2PConnection {
     onMessageHandler: (msg: any) => void,
     onDisconnectionHandler: () => void
   ) {
+    this.notificationId = Date.now().toString();
     this._masterId = masterId;
     this._masterRole = masterRole;
     this._operationId = operationId;
@@ -82,8 +105,14 @@ export default class MobileSlaveP2PConnection implements SlaveP2PConnection {
     this.peer.addEventListener('connectionstatechange', () => {
       if (this.peer.connectionState === 'failed') {
         onDisconnectionHandler();
+        notification(
+          this.notificationId,
+          'Your device completed a contribution'
+        );
       }
     });
+
+    notification(this.notificationId, 'Your device is currently contributing');
   }
 
   get masterId(): string {
@@ -172,5 +201,6 @@ export default class MobileSlaveP2PConnection implements SlaveP2PConnection {
 
   close(): void {
     this.peer.close();
+    notification(this.notificationId, 'Your device completed a contribution');
   }
 }
