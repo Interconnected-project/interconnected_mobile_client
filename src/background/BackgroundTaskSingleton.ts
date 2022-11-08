@@ -5,7 +5,7 @@ import NetInfo, { NetInfoStateType } from '@react-native-community/netinfo';
 import Heartbeat from './Heartbeat';
 import BackgroundTaskStatus from './BackgroundTaskStatus';
 import { BATTERY_PERCENTAGE_TRESHOLD } from '../tabs/home/PrerequisitesSection';
-import InterconnectedNode from 'interconnected_node';
+import InterconnectedNode, { DeviceType } from 'interconnected_node';
 import { ToastAndroid } from 'react-native';
 import MobileP2PConnectionBuilders from './mobileSpecificNodeImplementation/MobileP2PConnectionBuilders';
 
@@ -42,7 +42,11 @@ export default class BackgroundTaskSingleton {
   private constructor() {
     const myId = DeviceInfo.getUniqueIdSync();
     ToastAndroid.show('My id: ' + myId, ToastAndroid.SHORT);
-    this.node = new InterconnectedNode(myId, new MobileP2PConnectionBuilders());
+    this.node = new InterconnectedNode(
+      myId,
+      new MobileP2PConnectionBuilders(),
+      DeviceType.MOBILE
+    );
   }
 
   public static get instance(): BackgroundTaskSingleton {
