@@ -22,6 +22,7 @@
     "react-native-screens": "^3.17.0",
     "react-native-step-indicator": "^1.0.3",
     "react-native-switch-toggle": "^2.2.1",
+    "react-native-uuid": "^2.0.1",
     "react-native-vector-icons": "^9.2.0",
     "react-native-webrtc": "^106.0.0-beta.6"
   },
