@@ -1,13 +1,21 @@
+import BackgroundService from 'react-native-background-actions';
 import BackgroundTaskSingleton from './BackgroundTaskSingleton';
 
-export function backgroundTask() {
-  return async () => {
-    const arePrerequisitesMet =
-      await BackgroundTaskSingleton.instance.prerequisitesMet();
-    if (arePrerequisitesMet) {
-      BackgroundTaskSingleton.instance.startNode();
-    } else {
-      BackgroundTaskSingleton.instance.stopNode();
+const sleep = (time: any) =>
+  new Promise((resolve) => setTimeout(() => resolve(undefined), time));
+
+export async function backgroundTask(taskDataArguments: any) {
+  const { delay } = taskDataArguments;
+  await new Promise(async () => {
+    while (BackgroundService.isRunning()) {
+      const arePrerequisitesMet =
+        await BackgroundTaskSingleton.instance.prerequisitesMet();
+      if (arePrerequisitesMet) {
+        BackgroundTaskSingleton.instance.startNode();
+      } else {
+        BackgroundTaskSingleton.instance.stopNode();
+      }
+      await sleep(delay);
     }
-  };
+  });
 }

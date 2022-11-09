@@ -2,15 +2,30 @@ import DeviceInfo from 'react-native-device-info';
 import NetInfo, { NetInfoStateType } from '@react-native-community/netinfo';
 import uuid from 'react-native-uuid';
 
-import Heartbeat from './Heartbeat';
+import BackgroundService from 'react-native-background-actions';
 import BackgroundTaskStatus from './BackgroundTaskStatus';
 import { BATTERY_PERCENTAGE_TRESHOLD } from '../tabs/home/PrerequisitesSection';
 import InterconnectedNode, { DeviceType } from 'interconnected_node';
-import { ToastAndroid } from 'react-native';
 import MobileP2PConnectionBuilders from './mobileSpecificNodeImplementation/MobileP2PConnectionBuilders';
+import { backgroundTask } from './backgroundTask';
 
 const BROKER_SERVICE_ADDRESS =
   'http://ec2-3-208-18-248.compute-1.amazonaws.com:8000';
+
+const OPTIONS = {
+  taskName: 'BackgroundTask',
+  taskTitle: 'Interconnected',
+  taskDesc: 'Grid contribution is enabled',
+  taskIcon: {
+    name: 'ic_launcher',
+    type: 'mipmap',
+  },
+  color: '#c80a50',
+  linkingURI: 'yourSchemeHere://chat/jane', // See Deep Linking for more info
+  parameters: {
+    delay: 2000,
+  },
+};
 
 export default class BackgroundTaskSingleton {
   private static _instance: BackgroundTaskSingleton;
@@ -35,9 +50,7 @@ export default class BackgroundTaskSingleton {
 
   public async isRunning(): Promise<boolean> {
     return new Promise<boolean>((resolve) => {
-      Heartbeat.isServiceRunning().then((res: boolean) => {
-        resolve(res);
-      });
+      resolve(BackgroundService.isRunning());
     });
   }
 
@@ -45,7 +58,7 @@ export default class BackgroundTaskSingleton {
     return new Promise<void>((resolve, reject) => {
       this.isRunning().then(async (v) => {
         if (!v) {
-          await Heartbeat.startService();
+          await BackgroundService.start(backgroundTask, OPTIONS);
           resolve();
         } else {
           reject();
@@ -59,7 +72,7 @@ export default class BackgroundTaskSingleton {
       this.isRunning().then(async (v) => {
         if (v) {
           await this.stopNode();
-          await Heartbeat.stopService();
+          await BackgroundService.stop();
         }
         resolve();
       });

@@ -42,6 +42,7 @@
         <service
             android:name="com.interconnected_mobile_client.HeartbeatEventService">
         </service>
+        <service android:name="com.asterinet.react.bgactions.RNBackgroundActionsTask" />
         <receiver
             android:name="com.interconnected_mobile_client.BootUpReceiver"
             android:enabled="true"
