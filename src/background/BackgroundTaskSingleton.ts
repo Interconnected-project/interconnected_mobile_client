@@ -1,6 +1,7 @@
 import DeviceInfo from 'react-native-device-info';
 import NetInfo, { NetInfoStateType } from '@react-native-community/netinfo';
 import uuid from 'react-native-uuid';
+import { ToastAndroid } from 'react-native';
 
 import BackgroundService from 'react-native-background-actions';
 import BackgroundTaskStatus from './BackgroundTaskStatus';
@@ -34,6 +35,7 @@ export default class BackgroundTaskSingleton {
 
   private constructor() {
     let myId: any = uuid.v4();
+    ToastAndroid.show('My id: ' + myId, ToastAndroid.SHORT);
     this.node = new InterconnectedNode(
       myId,
       new MobileP2PConnectionBuilders(),
